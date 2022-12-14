@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import Posts from '../components/Posts';
-import { getPosts } from '../util/api';
+import { getPosts, getSlowPosts } from '../util/api';
 
 function BlogPostsPage() {
   const loaderData = useLoaderData();
@@ -15,5 +15,5 @@ function BlogPostsPage() {
 export default BlogPostsPage;
 
 export function loader() {
-  return getPosts();
+  return getSlowPosts();
 }

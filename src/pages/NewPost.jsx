@@ -1,4 +1,4 @@
-import { redirect, useNavigate } from 'react-router-dom';
+import { redirect, useActionData, useNavigate, useNavigation } from 'react-router-dom';
 
 import NewPostForm from '../components/NewPostForm';
 import { savePost } from '../util/api';
@@ -6,16 +6,19 @@ import { savePost } from '../util/api';
 function NewPostPage() {
   
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const data = useActionData();
 
   function cancelHandler() {
     navigate('/blog');
   }
-
+  console.log(navigation);
   return (
     <>
+    {data && data.status && <p>{data.message}</p>}
       <NewPostForm
         onCancel={cancelHandler}
-        submitting={false}
+        submitting={navigation.state === 'submitting'}
       />
     </>
   );
@@ -33,8 +36,7 @@ export async function action({request}){
     await savePost(post);
   } catch (error) {
     if(error.status === 422){
-      //tbd
-      throw error;
+      return error
     }
     throw error;
   }

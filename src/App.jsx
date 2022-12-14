@@ -9,6 +9,7 @@ import {
 
 import BlogLayout from "./pages/BlogLayout";
 import BlogPostsPage, { loader as blogPostsLoader } from "./pages/BlogPosts";
+import ErrorPage from "./pages/Error";
 import NewPostPage from "./pages/NewPost";
 import PostDetailPage, { loader as postDetailLoader } from "./pages/PostDetail";
 import RootLayout from "./pages/RootLayout";
@@ -16,7 +17,7 @@ import WelcomePage from "./pages/Welcome";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
       <Route index element={<WelcomePage />} />
       <Route path="/blog" element={<BlogLayout />}>
         <Route index element={<BlogPostsPage />} loader={blogPostsLoader} />
@@ -24,7 +25,6 @@ const router = createBrowserRouter(
           path=":id"
           element={<PostDetailPage />}
           loader={postDetailLoader}
-          errorElement={<p>An error occurred!</p>}
         />
       </Route>
       <Route path="/blog/new" element={<NewPostPage />} />
